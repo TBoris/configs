@@ -1,0 +1,105 @@
+# General settings
+set charset=UTF8
+set editor="vim"
+unset beep
+#set collapse_unread=no
+#set uncollapse_jump=yes
+
+
+# Receiving settings
+
+set mbox_type=Maildir
+set folder="~/.Maildir"
+mailboxes `echo -n "+ "; for file in ~/.Maildir/*; do box=$(basename "$file"); echo -n "\"+$box\" "; done`
+set spoolfile="~/.Maildir/INBOX"
+set header_cache="~/"
+
+# Sending settings
+
+set realname = "Boris Tsema"
+set from = "b_tsema@wargaming.net"
+set use_from=yes
+set envelope_from=yes
+set postponed="+Drafts"
+set record = "+Sent"
+set copy
+
+set sendmail="/usr/bin/msmtp"
+
+
+# MIME settings
+
+auto_view text/html
+
+
+# UI settings
+
+# Show help.
+set help
+
+# Index settings
+# http://www.mutt.org/doc/manual/#index-format
+set index_format="%Z %[%b %d %H:%M] %b %-20.20L %s"
+set status_format='-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flagged:%F?%?t? Tagged:%t?%?p? Postponed:%p?%?b? Unread mailboxes:%b?]---(sorted by %s/%S)-%>-(%P)---'
+
+#set sort=threads
+set sort=date
+set sort_aux=last-date-received
+set strict_threads=no
+set sort_re=no
+
+color index cyan default '~f Global'
+
+# My team
+# Preprod and others
+
+
+# Pager settings
+
+set pager_context=5
+set pager_index_lines=10
+set smart_wrap=yes
+
+# Vim-like style.
+set tilde
+
+# Colors
+color body yellow default "(http|ftp|https)://[_a-zA-Z0-9\?\=\&\@\%\#\:\,\./~\-]+"
+color body yellow default "[_a-z\.\$A-Z0-9-]+@[a-zA-Z0-9\./\-]+"
+
+# +/- lines like in vimdiff
+color body red default "^    - .*$"
+color body green default "^    [+] .*$"
+# Issues types in JIRA letters.
+color body green default "^[(](Bug|User\ Story|Task|Improvement|Sub-task)[)].*$"
+# Signatures
+color body black default "^\ *Wargaming.net\ +\|.*Game\ ?Stream"
+color body black default "^\ *(Belarus, Minsk)|(Minsk, Belarus)$"
+color body black default "^\ *Egz.*"
+color body black default "^\ *(Software\ Engineer|(Lead)?\ ?Web\ Developer|Business\ analyst|(Project|Product|Program)\ Manager|(Lead)?\ ?Q[aA]\ Engineer).*,?.*$"
+color body black default "^\ *(\[[0-9]*\])?([wW]argaming.net|www.wargaming.com)$"
+color body black default "^\ *(Skype:|Phone:|Email:|Mobile:|Mob:|Телефон:).*$"
+# Mails quotes
+color body brightblack default "^\ *(From:|Sent:|To:|Cc:|Subject:|Importance:|Date:|-----Original Message-----).*$"
+color body brightblack default "^\ *On.*at.*wrote:$"
+color signature blue default
+color attachment brightblack default
+
+
+# Addressbook settings.
+set query_command = "abook --mutt-query '%s'"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>"
+
+# Bindings
+bind index G last-entry
+bind index 'gg' first-entry
+bind index 'rg' group-reply
+
+# Macros
+macro index 'zo' ':set my_oldcollapse_unread=$collapse_unread<enter>:set collapse_unread=yes<enter><collapse-thread>:set collapse_unread=$my_oldcollapse_unread<enter>' 'Collapse thread.'
+macro index 'zc' 'zo' '(Un)collapse thread.'
+
+# Hooks
+
+#folder-hook . 'push "<collapse-all>"'
+folder-hook . 'push ":set collapse\_unread=no<enter>"'
