@@ -1,0 +1,6 @@
+#text/html; w3m -I %{charset} -T text/html; copiousoutput;
+#text/html; echo $SHELL; copiousoutput;
+#text/html; tee >(lynx -dump -stdin -listonly -force_html -unique_urls) | pandoc -f html -t plain; copiousoutput;
+text/html; lynx -width=120 --assume_charset %{charset} -stdin -dump -force_html -unique_urls; copiousoutput; description=HTML Text;
+#text/html; iconv -f %{charset} -t utf-8 |pandoc -f html -t plain; copiousoutput;
+#text/html; iconv -f %{charset} -t utf-8 |pandoc -f html -t rst; copiousoutput;
